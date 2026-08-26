@@ -24,14 +24,18 @@ export function PortfolioSection() {
               as="article"
               className="group overflow-hidden border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(2,6,23,0.7))] p-0 transition-all duration-300 hover:-translate-y-1 hover:border-sky-400/35 hover:shadow-[0_28px_72px_rgba(14,165,233,0.12)]"
             >
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden bg-slate-950/60">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
                   loading="lazy"
                   sizes="(min-width: 1024px) 33vw, 100vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className={
+                    item.imageFit === "contain"
+                      ? "object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                      : "object-cover transition-transform duration-500 group-hover:scale-105"
+                  }
                 />
                 <div className="aspect-[16/10]" aria-hidden="true" />
               </div>

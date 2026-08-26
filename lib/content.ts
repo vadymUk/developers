@@ -10,6 +10,7 @@ export type PortfolioItem = {
   category: string;
   description: string;
   image: string;
+  imageFit?: "cover" | "contain";
   url: string;
 };
 
@@ -70,28 +71,29 @@ export const services: Service[] = [
 
 export const portfolio: PortfolioItem[] = [
   {
-    title: "Project 1",
+    title: "Project 1 Landing Page",
     category: "Landing Page",
     description: "Продаюча односторінкова сторінка для малого бізнесу.",
-    image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/transportation.jpg",
+    imageFit: "contain",
     url: "https://transportation-lovat-psi.vercel.app/",
   },
   {
-    title: "Project 2",
+    title: "Project 2 Online Small Store",
     category: "Інтернет-магазин",
     description: "Модульний онлайн-магазин із чіткою навігацією та продажем.",
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
-    url: "https://navigation-kappa-mocha.vercel.app/",
+    image: "/images/navigation.jpg",
+    imageFit: "contain",
+    url: "https://navigation-beige-five.vercel.app/",
   },
   {
-    title: "Project 3",
+    title: "Project 3 Business Website",
     category: "Бізнес-сайт",
     description:
       "Професійний корпоративний сайт для підвищення довіри клієнтів.",
     image:
       "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    imageFit: "contain",
     url: "https://js-native-picture.vercel.app/",
   },
 ];

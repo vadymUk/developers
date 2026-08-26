@@ -1,11 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-  Code2,
-  MonitorSmartphone,
-  Star,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 
@@ -63,63 +58,17 @@ export function HeroSection() {
           <div className="absolute -left-5 top-8 h-24 w-24 rounded-full bg-sky-500/20 blur-3xl" />
           <div className="absolute -right-6 bottom-10 h-28 w-28 rounded-full bg-violet-500/20 blur-3xl" />
 
-          <div className="relative rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.94),rgba(15,23,42,0.7))] p-4 shadow-[0_30px_80px_rgba(15,23,42,0.6)] backdrop-blur-sm">
-            <div className="float-slow rounded-[1.5rem] border border-white/10 bg-[linear-gradient(135deg,#020817_0%,#0f172a_35%,#111827_100%)] p-6 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[linear-gradient(135deg,#7dd3fc_0%,#38bdf8_18%,#60a5fa_35%,#8b5cf6_100%)] text-slate-950 shadow-[0_10px_20px_rgba(96,165,250,0.35)]">
-                    <Code2 className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-[0.7rem] uppercase tracking-[0.2em] text-slate-400">
-                      Project
-                    </p>
-                    <p className="mt-1 text-lg font-semibold">
-                      Business Growth
-                    </p>
-                  </div>
-                </div>
-                <div className="rounded-full bg-emerald-500/20 px-2.5 py-1 text-xs font-medium text-emerald-300">
-                  Online
-                </div>
-              </div>
-
-              <div className="mt-6 space-y-4">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-slate-300">Фокус проєкту</p>
-                      <p className="mt-1 text-2xl font-bold text-white">
-                        Результат
-                      </p>
-                    </div>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[linear-gradient(135deg,rgba(52,211,153,0.18),rgba(56,189,248,0.2))]">
-                      <div className="h-5 w-5 rounded-full bg-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.7)]" />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="flex items-center gap-2 text-sky-200">
-                      <MonitorSmartphone className="h-4 w-4" />
-                      <span className="text-xs uppercase tracking-[0.18em]">
-                        UX
-                      </span>
-                    </div>
-                    <p className="mt-3 text-xl font-bold text-white">Fast</p>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <div className="flex items-center gap-2 text-violet-200">
-                      <Code2 className="h-4 w-4" />
-                      <span className="text-xs uppercase tracking-[0.18em]">
-                        Code
-                      </span>
-                    </div>
-                    <p className="mt-3 text-xl font-bold text-white">Clean</p>
-                  </div>
-                </div>
-              </div>
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 p-4 shadow-[0_30px_80px_rgba(15,23,42,0.6)] backdrop-blur-sm">
+            <div className="float-slow relative w-full overflow-hidden rounded-[1.5rem] bg-slate-950">
+              <Image
+                src="/images/developt.jpg"
+                alt="Development"
+                width={800}
+                height={800}
+                sizes="(min-width: 1024px) 40vw, 90vw"
+                className="h-auto w-full object-contain"
+                priority
+              />
             </div>
           </div>
         </div>
