@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowRight,
   Building2,
@@ -7,50 +9,35 @@ import {
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card } from "@/components/ui/card";
+import { useLanguage } from "@/lib/i18n/language-context";
 
-const offers = [
-  {
-    title: "Landing Page",
-    description:
-      "Односторінковий сайт для реклами послуги, продукту або бізнесу.",
-    icon: LayoutTemplate,
-    features: ["Швидкий старт", "Продаючий акцент", "SEO-структура"],
-    accent: "from-sky-500/25 via-cyan-400/10 to-violet-500/20",
-  },
-  {
-    title: "Інтернет-магазин",
-    description:
-      "Невеликий сучасний онлайн-магазин із каталогом товарів та необхідним функціоналом.",
-    icon: ShoppingBag,
-    features: ["Каталог товарів", "Уніфікований UX", "Просте оформлення"],
-    accent: "from-violet-500/25 via-fuchsia-400/10 to-sky-500/20",
-  },
-  {
-    title: "Бізнес-сайт",
-    description:
-      "Професійний сайт компанії, майстра або приватного підприємця.",
-    icon: Building2,
-    features: ["Візуальна довіра", "Чітка структура", "Під ключ"],
-    accent: "from-emerald-500/20 via-cyan-400/10 to-sky-500/20",
-  },
+const icons = [LayoutTemplate, ShoppingBag, Building2];
+const accents = [
+  "from-sky-500/25 via-cyan-400/10 to-violet-500/20",
+  "from-violet-500/25 via-fuchsia-400/10 to-sky-500/20",
+  "from-emerald-500/20 via-cyan-400/10 to-sky-500/20",
 ];
 
 export function ServicesSection() {
+  const { t } = useLanguage();
+
   return (
     <section id="services" className="relative py-20 sm:py-24">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_rgba(96,165,250,0.08),transparent_42%)]" />
       <Container>
         <SectionHeading
-          eyebrow="Послуги"
-          title="Створюю сайти під ваші задачі"
-          description="Рішення для бізнесу, який хоче виглядати професійно, отримувати більше клієнтів і працювати без хаосу."
+          eyebrow={t.services.eyebrow}
+          title={t.services.title}
+          description={t.services.description}
           align="center"
           className="mb-12"
         />
 
         <div className="grid gap-6 md:grid-cols-3">
-          {offers.map(
-            ({ title, description, features, icon: Icon, accent }) => (
+          {t.services.offers.map(({ title, description, features }, index) => {
+            const Icon = icons[index];
+            const accent = accents[index];
+            return (
               <Card
                 key={title}
                 as="article"
@@ -86,13 +73,13 @@ export function ServicesSection() {
                     href="#contact"
                     className="mt-6 inline-flex items-center gap-2 rounded-md text-sm font-semibold text-sky-100 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300"
                   >
-                    Обговорити формат
+                    {t.services.discussCta}
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                 </div>
               </Card>
-            ),
-          )}
+            );
+          })}
         </div>
       </Container>
     </section>

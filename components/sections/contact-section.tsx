@@ -1,48 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Copy, MessageCircle, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { contactSchema, type ContactFormValues } from "@/lib/contact-schema";
+import {
+  createContactSchema,
+  type ContactFormValues,
+} from "@/lib/contact-schema";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 const inputClasses =
   "w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-white outline-none transition-colors placeholder:text-slate-500 focus:border-sky-400/60 focus:ring-2 focus:ring-sky-400/20";
 const contactNumber = "+48 576 222 842";
 const compactContactNumber = "+48576222842";
-
-const contactChannels = [
-  {
-    name: "Viber",
-    description: "Написати у Viber",
-    href: `viber://chat?number=${encodeURIComponent(compactContactNumber)}`,
-    icon: MessageCircle,
-    fallback:
-      "На desktop Viber може бути недоступний. Скопіюйте номер і відкрийте його у застосунку.",
-  },
-  {
-    name: "WhatsApp",
-    description: "Відкрити WhatsApp chat",
-    href: `https://wa.me/${compactContactNumber.slice(1)}`,
-    icon: MessageCircle,
-    fallback: "Відкриває чат WhatsApp у новій вкладці.",
-  },
-  {
-    name: "Телефон",
-    description: "Зателефонувати",
-    href: `tel:${compactContactNumber}`,
-    icon: PhoneCall,
-    fallback:
-      "На desktop номер відкриється у доступному телефонному застосунку.",
-  },
+const channelIcons = [MessageCircle, MessageCircle, PhoneCall];
+const channelHrefs = [
+  `viber://chat?number=${encodeURIComponent(compactContactNumber)}`,
+  `https://wa.me/${compactContactNumber.slice(1)}`,
+  `tel:${compactContactNumber}`,
 ];
 
 export function ContactSection() {
+  const { t } = useLanguage();
   const [submitError, setSubmitError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const contactSchema = useMemo(
+    () => createContactSchema(t.contact.errors),
+    [t],
+  );
+  const contactChannels = t.contact.channels.map((channel, index) => ({
+    ...channel,
+    href: channelHrefs[index],
+    icon: channelIcons[index],
+  }));
   const {
     register,
     handleSubmit,
@@ -72,16 +66,14 @@ export function ContactSection() {
       const result = (await response.json()) as { message?: string };
 
       if (!response.ok) {
-        setSubmitError(
-          result.message ?? "Не вдалося відправити заявку. Спробуйте ще раз.",
-        );
+        setSubmitError(result.message ?? t.contact.genericError);
         return;
       }
 
       setSubmitted(true);
       reset();
     } catch {
-      setSubmitError("Не вдалося відправити заявку. Спробуйте ще раз.");
+      setSubmitError(t.contact.genericError);
     }
   }
 
@@ -90,9 +82,9 @@ export function ContactSection() {
       <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
         <div>
           <SectionHeading
-            eyebrow="Контакти"
-            title="Є ідея сайту? Давайте обговоримо."
-            description="Оберіть зручний спосіб зв'язку або залиште заявку через форму."
+            eyebrow={t.contact.eyebrow}
+            title={t.contact.title}
+            description={t.contact.description}
             className="mb-8"
           />
 
@@ -146,9 +138,11 @@ export function ContactSection() {
         </div>
 
         <div className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.95),rgba(2,6,23,0.8))] p-6 shadow-[0_30px_80px_rgba(2,6,23,0.52)]">
-          <h3 className="text-2xl font-semibold text-white">Залишити заявку</h3>
+          <h3 className="text-2xl font-semibold text-white">
+            {t.contact.formTitle}
+          </h3>
           <p className="mt-3 text-base text-slate-300">
-            Розкажіть про задачу, і я зв&apos;яжуся з вами найближчим часом.
+            {t.contact.formDescription}
           </p>
 
           {submitted ? (
@@ -156,8 +150,7 @@ export function ContactSection() {
               className="mt-6 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 p-4 text-emerald-100"
               role="status"
             >
-              Дякую! Ваше повідомлення успішно відправлено. Я зв&apos;яжуся з
-              вами найближчим часом.
+              {t.contact.successMessage}
             </div>
           ) : (
             <form
@@ -180,13 +173,14 @@ export function ContactSection() {
                   htmlFor="name"
                   className="mb-2 block text-sm font-medium text-slate-200"
                 >
-                  Ім&apos;я <span className="text-sky-300">*</span>
+                  {t.contact.fields.name}{" "}
+                  <span className="text-sky-300">*</span>
                 </label>
                 <input
                   id="name"
                   autoComplete="name"
                   className={inputClasses}
-                  placeholder="Ваше ім'я"
+                  placeholder={t.contact.fields.namePlaceholder}
                   aria-invalid={Boolean(errors.name)}
                   aria-describedby={errors.name ? "name-error" : undefined}
                   {...register("name")}
@@ -203,14 +197,15 @@ export function ContactSection() {
                   htmlFor="phone"
                   className="mb-2 block text-sm font-medium text-slate-200"
                 >
-                  Номер телефону <span className="text-sky-300">*</span>
+                  {t.contact.fields.phone}{" "}
+                  <span className="text-sky-300">*</span>
                 </label>
                 <input
                   id="phone"
                   type="tel"
                   autoComplete="tel"
                   className={inputClasses}
-                  placeholder="+38 (000) 000-00-00"
+                  placeholder={t.contact.fields.phonePlaceholder}
                   aria-invalid={Boolean(errors.phone)}
                   aria-describedby={errors.phone ? "phone-error" : undefined}
                   {...register("phone")}
@@ -227,7 +222,8 @@ export function ContactSection() {
                   htmlFor="requestType"
                   className="mb-2 block text-sm font-medium text-slate-200"
                 >
-                  Тип звернення <span className="text-sky-300">*</span>
+                  {t.contact.fields.requestType}{" "}
+                  <span className="text-sky-300">*</span>
                 </label>
                 <select
                   id="requestType"
@@ -238,9 +234,11 @@ export function ContactSection() {
                   }
                   {...register("requestType")}
                 >
-                  <option value="site">Хочу замовити сайт</option>
+                  <option value="site">
+                    {t.contact.fields.requestTypeSite}
+                  </option>
                   <option value="consultation">
-                    Хочу отримати консультацію
+                    {t.contact.fields.requestTypeConsultation}
                   </option>
                 </select>
                 {errors.requestType ? (
@@ -258,13 +256,13 @@ export function ContactSection() {
                   htmlFor="message"
                   className="mb-2 block text-sm font-medium text-slate-200"
                 >
-                  Ваше питання або побажання
+                  {t.contact.fields.message}
                 </label>
                 <textarea
                   id="message"
                   rows={5}
                   className={`${inputClasses} resize-y`}
-                  placeholder="Опишіть вашу задачу"
+                  placeholder={t.contact.fields.messagePlaceholder}
                   aria-invalid={Boolean(errors.message)}
                   aria-describedby={
                     errors.message ? "message-error" : undefined
@@ -293,7 +291,7 @@ export function ContactSection() {
                 size="lg"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Відправлення..." : "Надіслати заявку"}
+                {isSubmitting ? t.contact.submitting : t.contact.submit}
               </Button>
             </form>
           )}
@@ -304,6 +302,7 @@ export function ContactSection() {
 }
 
 function CopyContactButton({ value }: { value: string }) {
+  const { t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   async function copyNumber() {
@@ -316,12 +315,14 @@ function CopyContactButton({ value }: { value: string }) {
     }
   }
 
+  const label = copied ? t.contact.copiedLabel : t.contact.copyLabel;
+
   return (
     <button
       type="button"
       onClick={copyNumber}
-      aria-label={copied ? "Номер скопійовано" : "Скопіювати номер"}
-      title={copied ? "Номер скопійовано" : "Скопіювати номер"}
+      aria-label={label}
+      title={label}
       className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 outline-none transition-colors hover:border-sky-400/40 hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300"
     >
       {copied ? (

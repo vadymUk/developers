@@ -10,40 +10,12 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useLanguage } from "@/lib/i18n/language-context";
 
-const steps = [
-  {
-    title: "Розповідаєте про вашу ідею",
-    description:
-      "Клієнт зв'язується зі мною та розповідає, який сайт йому потрібен.",
-    icon: MessageCircle,
-  },
-  {
-    title: "Обговорюємо дизайн і функціонал",
-    description:
-      "Разом визначаємо структуру, зовнішній вигляд та необхідні функції.",
-    icon: MousePointer2,
-  },
-  {
-    title: "Я створюю сайт",
-    description: "Розробляю сайт під ваші вимоги.",
-    icon: Rocket,
-  },
-  {
-    title: "Ви перевіряєте результат",
-    description:
-      "Готовий сайт розміщується на хостингу, після чого ви отримуєте посилання та перевіряєте результат.",
-    icon: CheckCircle2,
-  },
-  {
-    title: "Отримуєте готовий сайт",
-    description:
-      "Якщо все подобається — проводиться розрахунок і ви отримуєте готовий сайт. Якщо потрібні зміни — виконується доопрацювання.",
-    icon: Lightbulb,
-  },
-];
+const icons = [MessageCircle, MousePointer2, Rocket, CheckCircle2, Lightbulb];
 
 export function ProcessSection() {
+  const { t } = useLanguage();
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -75,9 +47,9 @@ export function ProcessSection() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,_rgba(96,165,250,0.08),transparent_38%)]" />
       <Container>
         <SectionHeading
-          eyebrow="Процес"
-          title="Як ми створюємо ваш сайт"
-          description="Прозорий процес від першої розмови до готового сайту без зайвої складності."
+          eyebrow={t.process.eyebrow}
+          title={t.process.title}
+          description={t.process.description}
           align="center"
           className="mb-12"
         />
@@ -86,8 +58,8 @@ export function ProcessSection() {
           <div className="absolute bottom-6 left-6 top-6 w-px bg-gradient-to-b from-sky-400/70 via-violet-400/50 to-emerald-400/70 md:bottom-auto md:left-0 md:right-0 md:top-6 md:h-px md:w-auto md:bg-gradient-to-r" />
 
           <div className="grid gap-8 md:grid-cols-5 md:gap-5">
-            {steps.map((step, index) => {
-              const Icon = step.icon;
+            {t.process.steps.map((step, index) => {
+              const Icon = icons[index];
               const isVisible = visibleSteps.includes(index);
 
               return (
@@ -106,7 +78,7 @@ export function ProcessSection() {
 
                   <div className="relative min-h-[220px] rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(2,6,23,0.8))] p-5 shadow-[0_20px_60px_rgba(2,6,23,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-400/30 md:min-h-[260px] md:p-6">
                     <span className="text-sm font-semibold text-sky-300">
-                      Крок {index + 1}
+                      {t.process.stepLabel} {index + 1}
                     </span>
                     <h3 className="mt-4 text-xl font-semibold leading-tight text-white">
                       {step.title}

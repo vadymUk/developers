@@ -1,10 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <section id="top" className="relative overflow-hidden bg-transparent">
       <div className="gradient-shift absolute inset-x-0 top-0 -z-10 h-[620px] bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.22),_transparent_26%),radial-gradient(circle_at_top_right,_rgba(168,85,247,0.18),_transparent_38%)]" />
@@ -14,43 +19,39 @@ export function HeroSection() {
         <div className="reveal-up">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/25 bg-slate-900/70 px-3 py-2 text-sm font-medium text-sky-100 shadow-[0_0_25px_rgba(56,189,248,0.08)] backdrop-blur-sm">
             <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-            Розробка сайтів під ключ
+            {t.hero.badge}
           </div>
 
           <h1 className="max-w-xl text-balance text-4xl font-black tracking-[-0.06em] text-white sm:text-5xl lg:text-6xl">
-            Сучасні сайти, які допомагають вашому бізнесу виглядати професійно
-            та отримувати більше клієнтів.
+            {t.hero.title}
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
-            Я створюю Landing Page, інтернет-магазини та невеликі бізнес-сайти
-            під ключ — від ідеї до готового сайту в інтернеті.
+            {t.hero.description}
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Button asChild className="gap-2">
               <Link href="#contact">
-                Замовити сайт
+                {t.hero.ctaPrimary}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button variant="secondary" asChild>
-              <Link href="#contact">Отримати консультацію</Link>
+              <Link href="#contact">{t.hero.ctaSecondary}</Link>
             </Button>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-4 text-sm text-slate-300">
-            {["Сучасний дизайн", "Адаптивність", "SEO-структура"].map(
-              (item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2"
-                >
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                  <span>{item}</span>
-                </div>
-              ),
-            )}
+            {t.hero.tags.map((item) => (
+              <div
+                key={item}
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2"
+              >
+                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                <span>{item}</span>
+              </div>
+            ))}
           </div>
         </div>
 

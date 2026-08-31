@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
+import { LanguageProvider } from "@/lib/i18n/language-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -73,7 +74,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="uk" className={`${geistSans.variable} h-full antialiased`}>
+    <html
+      lang="uk"
+      className={`${geistSans.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
       <body
         className="min-h-full bg-white text-slate-900 dark:bg-slate-950 dark:text-white"
         suppressHydrationWarning
@@ -96,7 +101,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             }),
           }}
         />
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

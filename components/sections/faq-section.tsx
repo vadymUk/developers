@@ -2,26 +2,27 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { faqs } from "@/lib/content";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function FaqSection() {
+  const { t } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section id="faq" className="py-20 sm:py-24">
       <Container className="max-w-4xl">
         <SectionHeading
-          eyebrow="FAQ"
-          title="Часті питання"
-          description="Відповіді на найпоширеніші запитання про замовлення та виготовлення сайтів."
+          eyebrow={t.faq.eyebrow}
+          title={t.faq.title}
+          description={t.faq.description}
           align="center"
           className="mb-12"
         />
 
         <div className="space-y-4">
-          {faqs.map((item, index) => {
+          {t.faq.items.map((item, index) => {
             const isOpen = openIndex === index;
             const answerId = `faq-answer-${index}`;
 

@@ -1,12 +1,9 @@
-import Link from "next/link";
+"use client";
 
-const footerNavigation = [
-  { label: "Головна", href: "#top" },
-  { label: "Послуги", href: "#services" },
-  { label: "Роботи", href: "#portfolio" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Контакти", href: "#contact" },
-];
+import Link from "next/link";
+import { useLanguage } from "@/lib/i18n/language-context";
+
+const footerNavHrefs = ["#top", "#services", "#portfolio", "#faq", "#contact"];
 
 const footerContacts = [
   {
@@ -25,6 +22,15 @@ const footerContacts = [
 ];
 
 export function Footer() {
+  const { t } = useLanguage();
+  const footerNavLabels = [
+    t.nav.home,
+    t.nav.services,
+    t.nav.portfolio,
+    t.nav.faq,
+    t.nav.contact,
+  ];
+
   return (
     <footer className="border-t border-white/10 bg-slate-950/85">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -33,7 +39,7 @@ export function Footer() {
             <Link
               href="#top"
               className="inline-flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-sky-300"
-              aria-label="На головну"
+              aria-label={t.header.ariaHome}
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[linear-gradient(135deg,#7dd3fc_0%,#38bdf8_18%,#60a5fa_35%,#8b5cf6_100%)] text-[0.7rem] font-black tracking-[0.12em] text-slate-950 shadow-[0_10px_30px_rgba(56,189,248,0.3)]">
                 &lt;/&gt;
@@ -48,22 +54,22 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-6 max-w-sm text-base leading-7 text-slate-300">
-              Розробка сучасних сайтів та Landing Page під ключ.
+              {t.footer.description}
             </p>
           </div>
 
-          <nav aria-label="Навігація у footer">
+          <nav aria-label={t.footer.navHeading}>
             <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-400">
-              Навігація
+              {t.footer.navHeading}
             </h2>
             <div className="mt-4 flex flex-col items-start gap-3 text-sm text-slate-300">
-              {footerNavigation.map((item) => (
+              {footerNavHrefs.map((href, index) => (
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  key={href}
+                  href={href}
                   className="rounded-md outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300"
                 >
-                  {item.label}
+                  {footerNavLabels[index]}
                 </Link>
               ))}
             </div>
@@ -71,7 +77,7 @@ export function Footer() {
 
           <div>
             <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-400">
-              Контакти
+              {t.footer.contactsHeading}
             </h2>
             <div className="mt-4 flex flex-col items-start gap-3 text-sm text-slate-300">
               {footerContacts.map((contact) => (
@@ -90,8 +96,8 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Web Studio. Усі права захищені.</p>
-          <p>Створюю сайти, які працюють на результат.</p>
+          <p>{t.footer.copyright}</p>
+          <p>{t.footer.tagline}</p>
         </div>
       </div>
     </footer>

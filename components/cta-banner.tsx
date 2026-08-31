@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { useLanguage } from "@/lib/i18n/language-context";
 
 export function CtaBanner() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-8">
       <Container>
@@ -12,10 +17,10 @@ export function CtaBanner() {
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-sky-200">
-                  Спробуйте
+                  {t.cta.eyebrow}
                 </p>
                 <h3 className="mt-2 text-3xl font-semibold text-white">
-                  Готові запускати сайт, який принесе результат?
+                  {t.cta.title}
                 </h3>
               </div>
 
@@ -25,7 +30,7 @@ export function CtaBanner() {
                 className="border-sky-400/30 bg-white/5 text-white hover:bg-white/10"
               >
                 <Link href="#contact" className="gap-2">
-                  Обговорити проєкт
+                  {t.cta.cta}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
