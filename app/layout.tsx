@@ -74,7 +74,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="uk" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="min-h-full bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
+      <body
+        className="min-h-full bg-white text-slate-900 dark:bg-slate-950 dark:text-white"
+        suppressHydrationWarning
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
