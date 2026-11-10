@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ContactLink } from "@/components/contact-link";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 const footerNavHrefs = ["#top", "#services", "#portfolio", "#faq", "#contact"];
@@ -63,15 +64,24 @@ export function Footer() {
               {t.footer.navHeading}
             </h2>
             <div className="mt-4 flex flex-col items-start gap-3 text-sm text-slate-300">
-              {footerNavHrefs.map((href, index) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="rounded-md outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300"
-                >
-                  {footerNavLabels[index]}
-                </Link>
-              ))}
+              {footerNavHrefs.map((href, index) =>
+                href === "#contact" ? (
+                  <ContactLink
+                    key={href}
+                    className="rounded-md outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300"
+                  >
+                    {footerNavLabels[index]}
+                  </ContactLink>
+                ) : (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="rounded-md outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300"
+                  >
+                    {footerNavLabels[index]}
+                  </Link>
+                ),
+              )}
             </div>
           </nav>
 

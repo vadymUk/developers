@@ -78,7 +78,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 sm:py-24">
+    <section id="contact" className="scroll-mt-20 py-20 sm:py-24">
       <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
         <div>
           <SectionHeading

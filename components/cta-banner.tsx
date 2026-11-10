@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ContactLink } from "@/components/contact-link";
 import { Container } from "@/components/ui/container";
 import { useLanguage } from "@/lib/i18n/language-context";
 
@@ -29,10 +29,10 @@ export function CtaBanner() {
                 variant="secondary"
                 className="border-sky-400/30 bg-white/5 text-white hover:bg-white/10"
               >
-                <Link href="#contact" className="gap-2">
+                <ContactLink className="gap-2">
                   {t.cta.cta}
                   <ArrowRight className="h-4 w-4" />
-                </Link>
+                </ContactLink>
               </Button>
             </div>
           </div>

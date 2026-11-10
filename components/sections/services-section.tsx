@@ -9,6 +9,7 @@ import {
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card } from "@/components/ui/card";
+import { ContactLink } from "@/components/contact-link";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 const icons = [LayoutTemplate, ShoppingBag, Building2];
@@ -69,13 +70,12 @@ export function ServicesSection() {
                     ))}
                   </ul>
 
-                  <a
-                    href="#contact"
+                  <ContactLink
                     className="mt-6 inline-flex items-center gap-2 rounded-md text-sm font-semibold text-sky-100 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-sky-300"
                   >
                     {t.services.discussCta}
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </a>
+                  </ContactLink>
                 </div>
               </Card>
             );

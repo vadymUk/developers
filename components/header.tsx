@@ -5,6 +5,7 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navItems } from "@/lib/content";
 import { Button } from "@/components/ui/button";
+import { ContactLink } from "@/components/contact-link";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/language-context";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -22,6 +23,11 @@ export function Header() {
     t.nav.contact,
   ];
 
+  function closeMobileMenu() {
+    setMobileOpen(false);
+    document.body.style.overflow = "";
+  }
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 8);
 
@@ -37,6 +43,19 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
+
+  useEffect(() => {
+    const desktopViewport = window.matchMedia("(min-width: 64rem)");
+    const closeMobileMenu = () => {
+      if (desktopViewport.matches) {
+        setMobileOpen(false);
+        document.body.style.overflow = "";
+      }
+    };
+
+    desktopViewport.addEventListener("change", closeMobileMenu);
+    return () => desktopViewport.removeEventListener("change", closeMobileMenu);
+  }, []);
 
   return (
     <header
@@ -66,23 +85,32 @@ export function Header() {
 
         <nav className="hidden items-center gap-7 lg:flex">
           {navItems.map((item, index) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-slate-300 transition-colors duration-200 hover:text-white"
-            >
-              {navLabels[index]}
-            </Link>
+            item.href === "#contact" ? (
+              <ContactLink
+                key={item.href}
+                className="text-sm font-medium text-slate-300 transition-colors duration-200 hover:text-white"
+              >
+                {navLabels[index]}
+              </ContactLink>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-slate-300 transition-colors duration-200 hover:text-white"
+              >
+                {navLabels[index]}
+              </Link>
+            )
           ))}
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
           <Button asChild variant="primary" size="sm" className="gap-2">
-            <Link href="#contact">
+            <ContactLink>
               {t.header.orderSite}
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            </ContactLink>
           </Button>
         </div>
 
@@ -115,26 +143,36 @@ export function Header() {
           className="border-t border-white/10 bg-slate-950/95 backdrop-blur-xl"
         >
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
-            {navItems.map((item, index) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-white"
-              >
-                {navLabels[index]}
-              </Link>
-            ))}
+            {navItems.map((item, index) =>
+              item.href === "#contact" ? (
+                <ContactLink
+                  key={item.href}
+                  onClick={closeMobileMenu}
+                  className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-white"
+                >
+                  {navLabels[index]}
+                </ContactLink>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                  className="rounded-xl px-3 py-2.5 text-base font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-white"
+                >
+                  {navLabels[index]}
+                </Link>
+              ),
+            )}
 
             <div className="mt-2 px-3">
               <LanguageSwitcher />
             </div>
 
             <Button asChild size="lg" className="mt-3 w-full gap-2">
-              <Link href="#contact" onClick={() => setMobileOpen(false)}>
+              <ContactLink onClick={closeMobileMenu}>
                 {t.header.orderSite}
                 <ArrowRight className="h-4 w-4" />
-              </Link>
+              </ContactLink>
             </Button>
           </nav>
         </div>

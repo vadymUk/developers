@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight, CheckCircle2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { ContactLink } from "@/components/contact-link";
 import { useLanguage } from "@/lib/i18n/language-context";
 
 export function HeroSection() {
@@ -32,13 +32,13 @@ export function HeroSection() {
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Button asChild className="gap-2">
-              <Link href="#contact">
+              <ContactLink>
                 {t.hero.ctaPrimary}
                 <ArrowRight className="h-4 w-4" />
-              </Link>
+              </ContactLink>
             </Button>
             <Button variant="secondary" asChild>
-              <Link href="#contact">{t.hero.ctaSecondary}</Link>
+              <ContactLink>{t.hero.ctaSecondary}</ContactLink>
             </Button>
           </div>
 
